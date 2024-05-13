@@ -29,4 +29,5 @@ bin/
 ### Java Card Project ###
 deliverables/
 *.iml
-apdu_scripts/
+apdu_scripts/**
+!apdu_scripts/.gitkeep
