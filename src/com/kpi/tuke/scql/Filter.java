@@ -1,5 +1,9 @@
 package com.kpi.tuke.scql;
 
+/**
+ * The class holds information about a filter definition, such as the column name to be applied,
+ * the operand to filter, and the value to filter the column.
+ */
 public class Filter {
 
     private byte[] columnName;

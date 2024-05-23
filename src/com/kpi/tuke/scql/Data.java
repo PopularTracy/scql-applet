@@ -3,6 +3,10 @@ package com.kpi.tuke.scql;
 import javacard.framework.ISOException;
 import javacard.framework.Util;
 
+/**
+ * The class holds the information about the rows in the database.
+ * In addition, the class stores the index of the array (row number) in the table.
+ */
 public class Data {
 
     private byte[] data;
@@ -18,6 +22,13 @@ public class Data {
         this.index = index;
     }
 
+    /**
+     * Method checks if the filter can be applied for the data row.
+     * @param columnIndex column index in the data row to filter apply.
+     * @param operand filter operand.
+     * @param filterValue value to filter.
+     * @return true - if the operand and values are applied. false - otherwise.
+     */
     public boolean isFilterApply(short columnIndex, byte operand, byte[] filterValue) {
 
         short indexOffset = 0;

@@ -10,7 +10,7 @@ import javacard.framework.*;
 import javacardx.apdu.ExtendedLength;
 
 /**
- * SCQL Applet class
+ * SCQL Applet class implementing the SCQL handling mechanism by definition of ISO7816-7
  * 
  * @author Roman Danylych
  */
@@ -45,10 +45,7 @@ public class ScqlApplet extends Applet implements ExtendedLength {
 
     /**
      * Processes an incoming APDU.
-     * 
-     * @see APDU
-     * @param apdu
-     *            the incoming APDU
+     * @param apdu the incoming APDU.
      */
     @Override
     public void process(APDU apdu) {
@@ -79,6 +76,10 @@ public class ScqlApplet extends Applet implements ExtendedLength {
         }
     }
 
+    /**
+     * Performs APDU Transaction operation, as defined in ISO7816-7.
+     * @param apdu incoming APDU command.
+     */
     private void performTransaction(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
 
@@ -97,6 +98,10 @@ public class ScqlApplet extends Applet implements ExtendedLength {
         }
     }
 
+    /**
+     * Performs APDU SCQL operation, as defined in ISO7816-7/
+     * @param apdu incoming APDU command.
+     */
     private void performScql(APDU apdu) {
 
         byte[] buffer = apdu.getBuffer();

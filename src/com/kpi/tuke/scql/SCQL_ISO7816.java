@@ -2,6 +2,9 @@ package com.kpi.tuke.scql;
 
 import javacard.framework.ISO7816;
 
+/**
+ * Interface extends the {@code ISO7816} for the SCQL ISO7816-7 constants and APDU statuses.
+ */
 public interface SCQL_ISO7816 extends ISO7816 {
     short MAX_TABLES = 8;
     short MAX_VIEWS = 5;

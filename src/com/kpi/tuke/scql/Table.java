@@ -3,6 +3,11 @@ package com.kpi.tuke.scql;
 import javacard.framework.ISOException;
 import javacard.framework.Util;
 
+/**
+ * Class table is implemented by the definition of the table in ISO 7816-7.
+ * Table consist of table name, columns and {@code Data} row information.
+ * Additionally, table performs the modifications to the rows
+ */
 public class Table implements Performable {
 
     private byte[] tableName;
@@ -19,23 +24,32 @@ public class Table implements Performable {
         rows = new Data[SCQL_ISO7816.MAX_ROWS];
     }
 
+    /**
+     * Deletes the row, by index.
+     * @param rowIndex table row index.
+     */
     @Override
-    public void delete(short columnIndex) {
+    public void delete(short rowIndex) {
 
-        if (columnIndex < 0 || columnIndex >= dataCursor) {
+        if (rowIndex < 0 || rowIndex >= dataCursor) {
             ISOException.throwIt(SCQL_ISO7816.SW_REFERENCED_OBJ_NOT_FOUND);
         }
 
-        rows[columnIndex] = null;
+        rows[rowIndex] = null;
         dataCursor--;
 
-        for (short i = columnIndex; i < dataCursor; i++) {
+        for (short i = rowIndex; i < dataCursor; i++) {
             rows[i] = rows[(short) (i + 1)];
         }
 
         rows[dataCursor] = null;
     }
 
+    /**
+     * Updates the column data to the pointed column index.
+     * @param data new data to update.
+     * @param columnIndex index of column.
+     */
     @Override
     public void update(byte[] data, short columnIndex) {
 
@@ -52,6 +66,11 @@ public class Table implements Performable {
 
     }
 
+    /**
+     * Filters the rows by specified filters.
+     * @param filters filters to apply.
+     * @return filtered {@code Data}.
+     */
     @Override
     public Data[] filter(Filter[] filters) {
 
@@ -122,16 +141,27 @@ public class Table implements Performable {
         return filteredData;
     }
 
+    /**
+     * Table name getter.
+     * @return table name.
+     */
     @Override
     public byte[] getName() {
         return tableName;
     }
 
+    /**
+     * Gets amount of columns in the table.
+     * @return number of columns.
+     */
     @Override
     public short getColumnN() {
         return columnsN;
     }
 
+    /**
+     * Drops the all instances in the table.
+     */
     @Override
     public void drop() {
         for (short i = 0; i < dataCursor; i++) {
@@ -139,6 +169,10 @@ public class Table implements Performable {
         }
     }
 
+    /**
+     * Adds a new {@code Data} row into the table array.
+     * @param data new row to add.
+     */
     public void addData(Data data) {
 
         if (data == null) {
@@ -154,6 +188,12 @@ public class Table implements Performable {
         dataCursor++;
     }
 
+    /**
+     * Gets array column index in the table, by the given name.
+     * @param columnName column name.
+     * @return index of the array column, if the column name exists in the table.
+     * -1 - otherwise.
+     */
     @Override
     public short getColumnIndexByName(byte[] columnName) {
 

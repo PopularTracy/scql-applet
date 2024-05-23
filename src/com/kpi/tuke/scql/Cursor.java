@@ -2,6 +2,11 @@ package com.kpi.tuke.scql;
 
 import javacard.framework.ISOException;
 
+/**
+ * Cursor class used for selecting, deleting and updating data rows inside the {@code Performable} object
+ * instances.
+ * Cursor is defined by ISO7816-7, containing selecting column names and filters to be applied for filtering.
+ */
 public class Cursor {
 
     private Performable obj;
@@ -20,6 +25,9 @@ public class Cursor {
         this.selectedData = null;
     }
 
+    /**
+     * Used for clearing the object instance and resets the structure.
+     */
     public void removeReference() {
         obj = null;
 
@@ -32,6 +40,11 @@ public class Cursor {
         }
     }
 
+    /**
+     * Updates the data row inside {@code Performable} object instance.
+     * @param data columns data to be updated.
+     * @param columnName column names to be updated.
+     */
     public void update(byte[] data, byte[] columnName) {
 
         if (data == null || data.length == 0) {
@@ -61,6 +74,9 @@ public class Cursor {
 
     }
 
+    /**
+     * Deletes the row to which the cursor points to.
+     */
     public void delete() {
         // If cursor was not opened
         if (selectedData == null) {
@@ -79,6 +95,9 @@ public class Cursor {
         next();
     }
 
+    /**
+     * Opens the cursor.
+     */
     public void open() {
         this.selectedData = obj.filter(filters);
 
@@ -89,6 +108,9 @@ public class Cursor {
         this.dataCursor = 0;
     }
 
+    /**
+     * Moves cursor to the next data row.
+     */
     public void next() {
 
         // If cursor was not opened
@@ -103,6 +125,10 @@ public class Cursor {
         }
     }
 
+    /**
+     * Selects the row data, which cursor points to.
+     * @return pointed {@code Data} cursor row.
+     */
     public byte[] fetch() {
 
         // If cursor was not opened
@@ -125,6 +151,10 @@ public class Cursor {
         return DatabaseUtil.selectColumnsByIndexes(columns, columnIndexes);
     }
 
+    /**
+     * Moves the cursor to the next row and returns the selected data.
+     * @return selected data of the next row.
+     */
     public byte[] fetchNext() {
         byte[] result = fetch();
         next();

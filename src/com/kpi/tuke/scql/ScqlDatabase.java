@@ -6,10 +6,10 @@ import javacard.framework.JCSystem;
 import javacard.framework.Util;
 
 /**
- *
+ * SCQL Database is the implementation of the ISO7816-7 SCQL commands in the smart cards.
+ * The database contains table, view and cursor instances and methods to their modification.
  */
 public class ScqlDatabase {
-
 
     private Table[] tables;
     private View[] views;
@@ -484,6 +484,12 @@ public class ScqlDatabase {
         return obj;
     }
 
+    /**
+     * Method begins reading of incoming {@code APDU} block buffer and returns the command
+     * of the APDU.
+     * @param apdu incoming apfu command.
+     * @return block of data after Lc.
+     */
     private byte[] startRead(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
         byteIndex = 0;
